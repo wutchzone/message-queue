@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Base.ViewModel;
+﻿using Base.ViewModel;
+using message_queue.Model;
+using message_queue.View;
+using message_queue.Assets;
 
 
 namespace message_queue.ViewModel
 {
-    class MainViewModel : Base.ViewModel.BaseViewModel
+    class MainViewModel : BaseViewModel
     {
         private string _name;
         private string _emote;
@@ -22,12 +18,26 @@ namespace message_queue.ViewModel
 
         public MainViewModel()
         {
-            CheckCommand = new Command(Check);     
+            CheckCommand = new Command(Check);
         }
 
-        public void Check(object window)
+        public async void Check(object window)
         {
-            // TODO
+            if(await Twitch.ChechIfStreamExistsAsync(Name, EnviromentVariables.ClientID))
+            {
+                (window as MainWindow).Hide();
+                QueueWindow _queueWindow = new QueueWindow();
+                _queueWindow.Show();
+                _queueWindow.Closing += (sender, e) =>
+                {
+                    (window as MainWindow).Show();
+                };
+            }
+            else
+            {
+                // TODO: Not exists
+            }
+
         }
 
         public new void ChangeProperty(string propertyName) { base.ChangeProperty(propertyName); }
