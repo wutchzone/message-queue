@@ -25,12 +25,16 @@ namespace message_queue.ViewModel
         {
             if(await Twitch.ChechIfStreamExistsAsync(Name, EnviromentVariables.ClientID))
             {
-                (window as MainWindow).Hide();
+                TwitchResponseEmoticons _emotes = await Twitch.GetEmotesForStreamAsync(Name, EnviromentVariables.ClientID);
+
+                var _window = window as MainWindow;
+                _window.Hide();
                 QueueWindow _queueWindow = new QueueWindow();
+                (_queueWindow.DataContext as QueueViewModel).Emote = Emote;
                 _queueWindow.Show();
                 _queueWindow.Closing += (sender, e) =>
                 {
-                    (window as MainWindow).Show();
+                    _window.Show();
                 };
             }
             else

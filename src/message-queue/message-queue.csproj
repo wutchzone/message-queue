@@ -157,6 +157,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnviromentVariables.resx</DependentUpon>
     </Compile>
+    <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Twitch.cs" />
     <Compile Include="Model\TwitchResponseEmoticons.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

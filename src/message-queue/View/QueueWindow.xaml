@@ -4,9 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:message_queue.View"
+        xmlns:vm="clr-namespace:message_queue.ViewModel"
         mc:Ignorable="d"
-        Title="QueueWindow" Height="450" Width="800">
-    <Grid>
-        <Label>test</Label>
-    </Grid>
+        Title="QueueWindow" Height="900" Width="600" Background="#0E0C13" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:QueueViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="TwitchChat">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--<Image Grid.Column="0" Source="{Binding Image}" />
+                <Image Grid.Column="0" Source="{Binding Image}" />-->
+                <TextBlock Grid.Column="2" Foreground="White" Text="{Binding Text}"/>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <ItemsControl Background="Transparent" ItemsSource="{Binding Messages}" ItemTemplate="{StaticResource TwitchChat}">
+        
+    </ItemsControl>
 </Window>
