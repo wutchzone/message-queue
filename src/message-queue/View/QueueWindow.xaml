@@ -12,19 +12,35 @@
     </Window.DataContext>
     <Window.Resources>
         <DataTemplate x:Key="TwitchChat">
-            <Grid>
+            <Grid Margin="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="25" />
+                    <ColumnDefinition Width="25" />
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
-                <!--<Image Grid.Column="0" Source="{Binding Image}" />
-                <Image Grid.Column="0" Source="{Binding Image}" />-->
-                <TextBlock Grid.Column="2" Foreground="White" Text="{Binding Text}"/>
+                <Image Width="18" Height="18" Grid.Column="0" Source="{Binding ModeratorIconURL}" />
+                <Image Width="18" Height="18" Grid.Column="1" Source="{Binding SubscriberIconURL}" />
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Label HorizontalAlignment="Right"  Foreground="Gold" Content="{Binding Count}"/>
+                    <Label HorizontalAlignment="Left"  Foreground="Gold" Content="x" />
+                </StackPanel>
+                <Label Grid.Column="3" Foreground="Red" Content="{Binding Name}"/>
+                <Label Grid.Column="4" Foreground="White" Content="{Binding Text}"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    <ItemsControl Background="Transparent" ItemsSource="{Binding Messages}" ItemTemplate="{StaticResource TwitchChat}">
-        
-    </ItemsControl>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Width="50" Content="Previous" />
+            <Label Foreground="White" Content="1" />
+            <Button Width="50" Content="Next" />
+        </StackPanel>
+        <ItemsControl Grid.Row="1" Background="Transparent" ItemsSource="{Binding Messages}" ItemTemplate="{StaticResource TwitchChat}" />
+    </Grid>
 </Window>

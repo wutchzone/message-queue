@@ -26,11 +26,17 @@ namespace message_queue.ViewModel
             if(await Twitch.ChechIfStreamExistsAsync(Name, EnviromentVariables.ClientID))
             {
                 TwitchResponseEmoticons _emotes = await Twitch.GetEmotesForStreamAsync(Name, EnviromentVariables.ClientID);
+                TwitchResponseBadges _badges = await Twitch.GetBadgesAsync(Name, EnviromentVariables.ClientID);
+
+                Message.CarryModeratorIconURL = _badges.mod.image;
+                Message.CarrySubscriberIconURL = _badges?.subscriber.image;
 
                 var _window = window as MainWindow;
                 _window.Hide();
                 QueueWindow _queueWindow = new QueueWindow();
                 (_queueWindow.DataContext as QueueViewModel).Emote = Emote;
+                (_queueWindow.DataContext as QueueViewModel).Emotes = _emotes;
+                (_queueWindow.DataContext as QueueViewModel).Badges = _badges;
                 _queueWindow.Show();
                 _queueWindow.Closing += (sender, e) =>
                 {

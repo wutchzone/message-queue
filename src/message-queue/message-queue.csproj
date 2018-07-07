@@ -159,6 +159,7 @@
     </Compile>
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Twitch.cs" />
+    <Compile Include="Model\TwitchResponseBadges.cs" />
     <Compile Include="Model\TwitchResponseEmoticons.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\QueueViewModel.cs" />

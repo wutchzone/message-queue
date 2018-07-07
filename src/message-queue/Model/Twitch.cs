@@ -44,6 +44,16 @@ namespace message_queue.Model
             return JsonConvert.DeserializeObject<TwitchResponseEmoticons>(_data);
         }
 
+        public static async Task<TwitchResponseBadges> GetBadgesAsync(string name, string clientId)
+        {
+            client.DefaultRequestHeaders.Remove("Client-ID");
+            client.DefaultRequestHeaders.Add("Client-ID", clientId);
+            HttpResponseMessage response = await client.GetAsync("https://api.twitch.tv/kraken/chat/" + name + "/badges");
+
+            var _data = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TwitchResponseBadges>(_data);
+        }
+
         public static async Task<bool> ChechIfStreamExistsAsync(string name, string clientId)
         {
             client.DefaultRequestHeaders.Remove("Client-ID");
