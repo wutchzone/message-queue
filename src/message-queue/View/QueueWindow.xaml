@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:message_queue.View"
         xmlns:vm="clr-namespace:message_queue.ViewModel"
+        xmlns:view="clr-namespace:message_queue.Base.View"
         mc:Ignorable="d"
-        Title="QueueWindow" Height="900" Width="600" Background="#0E0C13" ResizeMode="NoResize">
+        Title="QueueWindow" Height="900" Width="600" Background="#0E0C13" ResizeMode="NoResize" FontSize="18" FontFamily="Helvatica Neune">
     <Window.DataContext>
         <vm:QueueViewModel />
     </Window.DataContext>
     <Window.Resources>
+        <view:PaginationConvertor x:Key="Paginator" />
         <DataTemplate x:Key="TwitchChat">
-            <Grid Margin="3">
+            <Grid Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="25" />
                     <ColumnDefinition Width="25" />
@@ -27,9 +29,12 @@
                     <Label HorizontalAlignment="Left"  Foreground="Gold" Content="x" />
                 </StackPanel>
                 <Label Grid.Column="3" Foreground="Red" Content="{Binding Name}"/>
-                <Label Grid.Column="4" Foreground="White" Content="{Binding Text}"/>
+                <StackPanel Grid.Column="4" Orientation="Horizontal">
+                    <Image Source="https://static-cdn.jtvnw.net/emoticons/v1/432432/1.0"/>
+                </StackPanel>
             </Grid>
         </DataTemplate>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -37,10 +42,21 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Width="50" Content="Previous" />
-            <Label Foreground="White" Content="1" />
-            <Button Width="50" Content="Next" />
+            <Button  BorderThickness="0" Background="Transparent" Width="80" Click="onPrevious">
+                <Image Source="/Assets/saveslot_scrollbar_leftarrow.png" />
+            </Button>
+            <Label x:Name="PageIndex" Foreground="White" Content="1" />
+            <Button BorderThickness="0" Background="Transparent" Width="80" Click="onNext">
+                <Image Source="/Assets/saveslot_scrollbar_rightarrow.png" />
+            </Button>
         </StackPanel>
-        <ItemsControl Grid.Row="1" Background="Transparent" ItemsSource="{Binding Messages}" ItemTemplate="{StaticResource TwitchChat}" />
+        <ItemsControl VerticalAlignment="Center" Grid.Row="1" Background="Transparent" ItemTemplate="{StaticResource TwitchChat}" AlternationCount="2">
+            <ItemsControl.ItemsSource>
+                <MultiBinding Converter="{StaticResource Paginator}">
+                    <Binding Path="Messages"/>
+                    <Binding Path="Content" ElementName="PageIndex"/>
+                </MultiBinding>
+            </ItemsControl.ItemsSource>
+        </ItemsControl>
     </Grid>
 </Window>

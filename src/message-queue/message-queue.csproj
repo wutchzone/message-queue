@@ -157,6 +157,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnviromentVariables.resx</DependentUpon>
     </Compile>
+    <Compile Include="Base\View\PaginationConvertor.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Twitch.cs" />
     <Compile Include="Model\TwitchResponseBadges.cs" />
@@ -219,7 +220,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\Model\" />
-    <Folder Include="Base\View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\saveslot_scrollbar_rightarrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\saveslot_scrollbar_leftarrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

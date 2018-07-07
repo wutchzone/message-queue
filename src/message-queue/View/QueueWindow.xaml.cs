@@ -23,5 +23,19 @@ namespace message_queue.View
         {
             InitializeComponent();
         }
+
+        private void onPrevious(object sender, RoutedEventArgs e)
+        {
+            var pageIndex = int.Parse(this.PageIndex.Content.ToString());
+            pageIndex--;
+            this.PageIndex.Content = pageIndex;
+        }
+
+        private void onNext(object sender, RoutedEventArgs e)
+        {
+            var pageIndex = int.Parse(this.PageIndex.Content.ToString());
+            pageIndex++;
+            this.PageIndex.Content = pageIndex;
+        }
     }
 }

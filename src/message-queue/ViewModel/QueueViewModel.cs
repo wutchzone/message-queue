@@ -1,13 +1,10 @@
-﻿using message_queue.Model;
-using System;
+﻿using Base.ViewModel;
+using message_queue.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace message_queue.ViewModel
 {
-    class QueueViewModel : Base.ViewModel.BaseViewModel
+    class QueueViewModel : BaseViewModel
     {
         private List<Message> _messages;
         private string _emote;

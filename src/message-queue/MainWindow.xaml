@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:message_queue"
         xmlns:vm="clr-namespace:message_queue.ViewModel"
         mc:Ignorable="d"
-        Title="Message Queue" Height="300" Width="300" ResizeMode="NoResize">
+        Title="Message Queue" Height="300" Width="300" ResizeMode="NoResize" FontFamily="Helvatica Neune">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="10" >
+        <StackPanel Margin="5" >
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Margin" Value="0,10,0,0"/>
@@ -39,6 +39,6 @@
                 <TextBox Grid.Column="1" Text="{Binding Emote}" />
             </Grid>
         </StackPanel>
-        <Button Grid.Row="1" Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=MainWindowName}">Check</Button>
+        <Button Grid.Row="1" Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=MainWindowName}" IsEnabled="{Binding WindiwOpened}">Check</Button>
     </Grid>
 </Window>

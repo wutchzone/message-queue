@@ -10,9 +10,11 @@ namespace message_queue.ViewModel
     {
         private string _name;
         private string _emote;
+        private bool _windowOpened;
 
         public string Name { get { return _name; } set { _name = value; ChangeProperty("Name"); } }
         public string Emote { get { return _emote; } set { _emote = value; ChangeProperty("Emote"); } }
+        public bool WindowOpened { get { return _windowOpened; } set { _windowOpened = value; ChangeProperty("WindowOpened"); } }
 
         public Command CheckCommand { get; set; }
 
@@ -23,6 +25,7 @@ namespace message_queue.ViewModel
 
         public async void Check(object window)
         {
+            WindowOpened = true;
             if(await Twitch.ChechIfStreamExistsAsync(Name, EnviromentVariables.ClientID))
             {
                 TwitchResponseEmoticons _emotes = await Twitch.GetEmotesForStreamAsync(Name, EnviromentVariables.ClientID);
@@ -32,6 +35,7 @@ namespace message_queue.ViewModel
                 Message.CarrySubscriberIconURL = _badges?.subscriber.image;
 
                 var _window = window as MainWindow;
+                
                 _window.Hide();
                 QueueWindow _queueWindow = new QueueWindow();
                 (_queueWindow.DataContext as QueueViewModel).Emote = Emote;
@@ -40,11 +44,13 @@ namespace message_queue.ViewModel
                 _queueWindow.Show();
                 _queueWindow.Closing += (sender, e) =>
                 {
+                    WindowOpened = false;
                     _window.Show();
                 };
             }
             else
             {
+                WindowOpened = false;
                 // TODO: Not exists
             }
 
