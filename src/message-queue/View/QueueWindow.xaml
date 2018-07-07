@@ -7,12 +7,13 @@
         xmlns:vm="clr-namespace:message_queue.ViewModel"
         xmlns:view="clr-namespace:message_queue.Base.View"
         mc:Ignorable="d"
-        Title="QueueWindow" Height="900" Width="600" Background="#0E0C13" ResizeMode="NoResize" FontSize="18" FontFamily="Helvatica Neune">
+        Title="QueueWindow (www.sedlak.biz)" Height="900" Width="600" Background="#0E0C13" ResizeMode="NoResize" FontSize="18" FontFamily="Helvatica Neune">
     <Window.DataContext>
         <vm:QueueViewModel />
     </Window.DataContext>
     <Window.Resources>
         <view:PaginationConvertor x:Key="Paginator" />
+        <view:CounterConvertor x:Key="Counter" />
         <DataTemplate x:Key="TwitchChat">
             <Grid Background="Transparent">
                 <Grid.ColumnDefinitions>
@@ -24,9 +25,8 @@
                 </Grid.ColumnDefinitions>
                 <Image Width="18" Height="18" Grid.Column="0" Source="{Binding ModeratorIconURL}" />
                 <Image Width="18" Height="18" Grid.Column="1" Source="{Binding SubscriberIconURL}" />
-                <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <Label HorizontalAlignment="Right"  Foreground="Gold" Content="{Binding Count}"/>
-                    <Label HorizontalAlignment="Left"  Foreground="Gold" Content="x" />
+                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Foreground="Gold" Content="{Binding Count, Converter={StaticResource Counter}}"/>
                 </StackPanel>
                 <Label Grid.Column="3" Foreground="Red" Content="{Binding Name}"/>
                 <StackPanel Grid.Column="4" Orientation="Horizontal">
@@ -34,7 +34,25 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-        
+        <Style x:Key="Lststyle" TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border BorderThickness="0" Padding="3"  Name="Border" Background="Transparent">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="ListBox.AlternationIndex" Value="0">
+                                <Setter TargetName="Border"  Property="Background" Value="#1F1925"/>
+                            </Trigger>
+                            <Trigger Property="ListBox.AlternationIndex" Value="1">
+                                <Setter TargetName="Border"  Property="Background" Value="#0E0C13"/> 
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -50,13 +68,13 @@
                 <Image Source="/Assets/saveslot_scrollbar_rightarrow.png" />
             </Button>
         </StackPanel>
-        <ItemsControl VerticalAlignment="Center" Grid.Row="1" Background="Transparent" ItemTemplate="{StaticResource TwitchChat}" AlternationCount="2">
-            <ItemsControl.ItemsSource>
+        <ListBox ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderThickness="0" Focusable="False" VerticalAlignment="Stretch" Grid.Row="1" Background="Transparent" ItemContainerStyle="{StaticResource Lststyle}" ItemTemplate="{StaticResource TwitchChat}" AlternationCount="2">
+            <ListBox.ItemsSource>
                 <MultiBinding Converter="{StaticResource Paginator}">
                     <Binding Path="Messages"/>
                     <Binding Path="Content" ElementName="PageIndex"/>
                 </MultiBinding>
-            </ItemsControl.ItemsSource>
-        </ItemsControl>
+            </ListBox.ItemsSource>
+        </ListBox>
     </Grid>
 </Window>

@@ -14,7 +14,7 @@ namespace message_queue.Base.View
 {
     class PaginationConvertor : IMultiValueConverter
     {
-        private int numberOfElementsPerPage = 20;
+        private int numberOfElementsPerPage = 22;
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
