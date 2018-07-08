@@ -14,6 +14,8 @@
     <Window.Resources>
         <view:PaginationConvertor x:Key="Paginator" />
         <view:CounterConvertor x:Key="Counter" />
+        <view:VisibilityConverter x:Key="Visibility" />
+        <view:EmoteURLToImageConverter x:Key="EmoteURLToImage" />
         <DataTemplate x:Key="TwitchChat">
             <Grid Background="Transparent">
                 <Grid.ColumnDefinitions>
@@ -21,17 +23,21 @@
                     <ColumnDefinition Width="25" />
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
-                <Image Width="18" Height="18" Grid.Column="0" Source="{Binding ModeratorIconURL}" />
-                <Image Width="18" Height="18" Grid.Column="1" Source="{Binding SubscriberIconURL}" />
+                <Image Width="18" Height="18" Grid.Column="0" Source="{Binding ModeratorIconURL}" Visibility="{Binding Moderator, Converter={StaticResource Visibility}}" />
+                <Image Width="18" Height="18" Grid.Column="1" Source="{Binding SubscriberIconURL}" Visibility="{Binding Subscriber, Converter={StaticResource Visibility}}"/>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Foreground="Gold" Content="{Binding Count, Converter={StaticResource Counter}}"/>
                 </StackPanel>
-                <Label Grid.Column="3" Foreground="Red" Content="{Binding Name}"/>
-                <StackPanel Grid.Column="4" Orientation="Horizontal">
-                    <Image Source="https://static-cdn.jtvnw.net/emoticons/v1/432432/1.0"/>
-                </StackPanel>
+                <Label Grid.Column="3" Foreground="{Binding NameColor}" Content="{Binding Name}"/>
+                <ItemsControl Grid.Column="4" ItemsSource="{Binding EmotesURL, Converter={StaticResource EmoteURLToImage}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </Grid>
         </DataTemplate>
         <Style x:Key="Lststyle" TargetType="ListBoxItem">

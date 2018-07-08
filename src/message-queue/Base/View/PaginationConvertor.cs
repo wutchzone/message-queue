@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace message_queue.Base.View
 {
