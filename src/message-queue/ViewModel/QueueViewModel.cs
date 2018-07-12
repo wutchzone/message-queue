@@ -15,12 +15,14 @@ namespace message_queue.ViewModel
         private TwitchResponseBadges _badges;
         private Twitch _twitch;
         private string _channel;
+        private bool _subOnly;
 
         public List<Message> Messages { get { return _messages; } set { _messages = value; ChangeProperty("Messages"); } }
         public string Emote { get { return _emote; } set { _emote = value; ChangeProperty("Emote"); } }
         public TwitchResponseEmoticons Emotes { get { return _emotes; } set { _emotes = value; ChangeProperty("Emotes"); } }
         public TwitchResponseBadges Badges { get { return _badges; } set { _badges = value; ChangeProperty("Badges"); } }
         public string Channel { get { return _channel; } set { _channel = value; ChangeProperty("Channel"); } }
+        public bool SubOnly { get { return _subOnly; } set { _subOnly = value; ChangeProperty("SubOnly"); } }
 
         public QueueViewModel()
         {
@@ -29,6 +31,11 @@ namespace message_queue.ViewModel
 
         public void OnMessage(object sender, OnMessageReceivedArgs e)
         {
+            if(e.ChatMessage.IsBroadcaster == false || e.ChatMessage.IsModerator == false)
+            {
+                if (SubOnly == true && e.ChatMessage.IsSubscriber != true) return;
+            }
+
             foreach (var item in e.ChatMessage.Message.Split(' '))
             {
                 if (item.Contains(Emote))

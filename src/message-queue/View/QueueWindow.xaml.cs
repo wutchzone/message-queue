@@ -27,6 +27,7 @@ namespace message_queue.View
         private void onPrevious(object sender, RoutedEventArgs e)
         {
             var pageIndex = int.Parse(this.PageIndex.Content.ToString());
+            if (pageIndex == 1) return;
             pageIndex--;
             this.PageIndex.Content = pageIndex;
         }

@@ -2,7 +2,7 @@
 using message_queue.Model;
 using message_queue.View;
 using message_queue.Assets;
-
+using System.Windows;
 
 namespace message_queue.ViewModel
 {
@@ -10,22 +10,27 @@ namespace message_queue.ViewModel
     {
         private string _name;
         private string _emote;
-        private bool _windowOpened;
+        private bool _subOnly;
+        private bool _enableleButton;
 
         public string Name { get { return _name; } set { _name = value; ChangeProperty("Name"); } }
         public string Emote { get { return _emote; } set { _emote = value; ChangeProperty("Emote"); } }
-        public bool WindowOpened { get { return _windowOpened; } set { _windowOpened = value; ChangeProperty("WindowOpened"); } }
+        public bool SubOnly { get { return _subOnly; } set { _subOnly = value; ChangeProperty("SubOnly"); } }
+        public bool EnableButton { get { return _enableleButton; } set { _enableleButton = value; ChangeProperty("EnableButton"); } }
 
         public Command CheckCommand { get; set; }
 
         public MainViewModel()
         {
             CheckCommand = new Command(Check);
+            SubOnly = true;
+            EnableButton = true;
         }
 
         public async void Check(object window)
         {
-            WindowOpened = true;
+            EnableButton = false;
+
             var _window = window as MainWindow;
 
             if (await Twitch.ChechIfStreamExistsAsync(Name, EnviromentVariables.ClientID))
@@ -45,18 +50,19 @@ namespace message_queue.ViewModel
                 (_queueWindow.DataContext as QueueViewModel).Badges = _badges;
                 (_queueWindow.DataContext as QueueViewModel).Channel = Name;
                 (_queueWindow.DataContext as QueueViewModel).Init();
+                (_queueWindow.DataContext as QueueViewModel).SubOnly = SubOnly;
 
                 _queueWindow.Show();
                 _queueWindow.Closing += (sender, e) =>
                 {
-                    WindowOpened = false;
                     _window.Show();
                     _window.Close();
                 };
             }
             else
             {
-                WindowOpened = false;
+                MessageBox.Show("Streamer does not exist.");
+                EnableButton = true;
             }
 
         }

@@ -38,7 +38,11 @@
                 <Label Grid.Column="0">Emote name</Label>
                 <TextBox Grid.Column="1" Text="{Binding Emote}" />
             </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Label>Subscriber only</Label>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding SubOnly}" />
+            </StackPanel>
         </StackPanel>
-        <Button Grid.Row="1" Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=MainWindowName}" IsEnabled="{Binding WindiwOpened}">Check</Button>
+        <Button Grid.Row="1" IsEnabled="{Binding EnableButton}" Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=MainWindowName}">Check</Button>
     </Grid>
 </Window>
