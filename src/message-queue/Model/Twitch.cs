@@ -36,8 +36,7 @@ namespace message_queue.Model
 
         public static async Task<TwitchResponseEmoticons> GetEmotesForStreamAsync(string name, string clientId)
         {
-            client.DefaultRequestHeaders.Remove("Client-ID");
-            client.DefaultRequestHeaders.Add("Client-ID", clientId);
+            SetHeader("Client-ID", clientId);
             HttpResponseMessage response = await client.GetAsync("https://api.twitch.tv/kraken/chat/" + name + "/emoticons");
 
             var _data = await response.Content.ReadAsStringAsync();
@@ -46,8 +45,7 @@ namespace message_queue.Model
 
         public static async Task<TwitchResponseBadges> GetBadgesAsync(string name, string clientId)
         {
-            client.DefaultRequestHeaders.Remove("Client-ID");
-            client.DefaultRequestHeaders.Add("Client-ID", clientId);
+            SetHeader("Client-ID", clientId);
             HttpResponseMessage response = await client.GetAsync("https://api.twitch.tv/kraken/chat/" + name + "/badges");
 
             var _data = await response.Content.ReadAsStringAsync();
@@ -56,8 +54,7 @@ namespace message_queue.Model
 
         public static async Task<bool> ChechIfStreamExistsAsync(string name, string clientId)
         {
-            client.DefaultRequestHeaders.Remove("Client-ID");
-            client.DefaultRequestHeaders.Add("Client-ID", clientId);
+            SetHeader("Client-ID", clientId);
             HttpResponseMessage response = await client.GetAsync("https://api.twitch.tv/kraken/channels/" + name);
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -67,6 +64,12 @@ namespace message_queue.Model
             {
                 return false;
             }
+        }
+
+        private static void SetHeader(string id, string value)
+        {
+            client.DefaultRequestHeaders.Remove("Client-ID");
+            client.DefaultRequestHeaders.Add("Client-ID", value);
         }
     }
 }
