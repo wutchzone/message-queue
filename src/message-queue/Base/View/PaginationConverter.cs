@@ -2,18 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows;
-using System.Windows.Controls;
-using System.Collections.ObjectModel;
 
 namespace message_queue.Base.View
 {
-    class PaginationConvertor : IMultiValueConverter
+    class PaginationConverter : IMultiValueConverter
     {
         private int numberOfElementsPerPage = 22;
 

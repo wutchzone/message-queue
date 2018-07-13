@@ -1,11 +1,11 @@
-﻿using TwitchLib.Client;
+﻿using Newtonsoft.Json;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
-using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net;
 
 namespace message_queue.Model
 {

@@ -1,9 +1,8 @@
 ﻿using Base.ViewModel;
+using message_queue.Assets;
 using message_queue.Model;
 using System.Collections.Generic;
-using message_queue.Assets;
 using TwitchLib.Client.Events;
-using System.Collections.ObjectModel;
 
 namespace message_queue.ViewModel
 {
@@ -16,6 +15,7 @@ namespace message_queue.ViewModel
         private Twitch _twitch;
         private string _channel;
         private bool _subOnly;
+        private int _pageIndex;
 
         public List<Message> Messages { get { return _messages; } set { _messages = value; ChangeProperty("Messages"); } }
         public string Emote { get { return _emote; } set { _emote = value; ChangeProperty("Emote"); } }
@@ -23,10 +23,16 @@ namespace message_queue.ViewModel
         public TwitchResponseBadges Badges { get { return _badges; } set { _badges = value; ChangeProperty("Badges"); } }
         public string Channel { get { return _channel; } set { _channel = value; ChangeProperty("Channel"); } }
         public bool SubOnly { get { return _subOnly; } set { _subOnly = value; ChangeProperty("SubOnly"); } }
+        public int PageIndex { get { return _pageIndex; } set { _pageIndex = value; ChangeProperty("PageIndex"); } }
+
+        public Command PageIndexCommand { get; set; }
 
         public QueueViewModel()
         {
             Messages = new List<Message>();
+            PageIndexCommand = new Command(ChangePageIndex, ChangePagePredicate);
+
+            PageIndex = 1;
         }
 
         public void OnMessage(object sender, OnMessageReceivedArgs e)
@@ -70,6 +76,16 @@ namespace message_queue.ViewModel
             _message.NameColor = e.ChatMessage.ColorHex;
             Messages.Add(_message);
             ChangeProperty("Messages");
+        }
+
+        public void ChangePageIndex(object parameter)
+        {
+            PageIndex += int.Parse(parameter.ToString());
+        }
+
+        public bool ChangePagePredicate(object parameter)
+        {
+            return true;
         }
 
         public void Init()

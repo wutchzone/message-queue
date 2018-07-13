@@ -12,8 +12,8 @@
         <vm:QueueViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <view:PaginationConvertor x:Key="Paginator" />
-        <view:CounterConvertor x:Key="Counter" />
+        <view:PaginationConverter x:Key="Paginator" />
+        <view:CounterConverter x:Key="Counter" />
         <view:VisibilityConverter x:Key="Visibility" />
         <view:EmoteURLToImageConverter x:Key="EmoteURLToImage" />
         <DataTemplate x:Key="TwitchChat">
@@ -52,7 +52,7 @@
                                 <Setter TargetName="Border"  Property="Background" Value="#1F1925"/>
                             </Trigger>
                             <Trigger Property="ListBox.AlternationIndex" Value="1">
-                                <Setter TargetName="Border"  Property="Background" Value="#0E0C13"/> 
+                                <Setter TargetName="Border"  Property="Background" Value="#0E0C13"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -60,17 +60,21 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding PageIndexCommand}" CommandParameter="-1" />
+        <KeyBinding Key="Right" Command="{Binding PageIndexCommand}" CommandParameter="1" />
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button  BorderThickness="0" Background="Transparent" Width="80" Click="onPrevious">
+            <Button BorderThickness="0" Background="Transparent" Width="80">
                 <Image Source="/Assets/saveslot_scrollbar_leftarrow.png" />
             </Button>
-            <Label x:Name="PageIndex" Foreground="White" Content="1" />
-            <Button BorderThickness="0" Background="Transparent" Width="80" Click="onNext">
+            <Label x:Name="PageIndex" Foreground="White" Content="{Binding PageIndex}" />
+            <Button BorderThickness="0" Background="Transparent" Width="80">
                 <Image Source="/Assets/saveslot_scrollbar_rightarrow.png" />
             </Button>
         </StackPanel>

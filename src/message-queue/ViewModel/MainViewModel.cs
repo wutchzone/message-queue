@@ -1,7 +1,7 @@
 ﻿using Base.ViewModel;
+using message_queue.Assets;
 using message_queue.Model;
 using message_queue.View;
-using message_queue.Assets;
 using System.Windows;
 
 namespace message_queue.ViewModel
