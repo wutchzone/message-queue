@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:message_queue.View"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:message_queue.ViewModel"
         xmlns:view="clr-namespace:message_queue.Base.View"
         mc:Ignorable="d"
@@ -59,6 +60,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="PageIndexButton" TargetType="Button">
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter x:Name="Item" />
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="Item" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <System:Int32 x:Key="NumberOfElements">22</System:Int32>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Left" Command="{Binding PageIndexCommand}" CommandParameter="-1" />
@@ -70,17 +86,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button BorderThickness="0" Background="Transparent" Width="80">
-                <Image Source="/Assets/saveslot_scrollbar_leftarrow.png" />
+            <Button BorderThickness="0" Background="Transparent" Width="80" Style="{StaticResource ResourceKey=PageIndexButton}" Command="{Binding PageIndexCommand}" CommandParameter="-1">
+                <Image Source="/Assets/leftarrow_enabled.png" />
             </Button>
             <Label x:Name="PageIndex" Foreground="White" Content="{Binding PageIndex}" />
-            <Button BorderThickness="0" Background="Transparent" Width="80">
-                <Image Source="/Assets/saveslot_scrollbar_rightarrow.png" />
+            <Button BorderThickness="0" Background="Transparent" Width="80" Style="{StaticResource ResourceKey=PageIndexButton}" Command="{Binding PageIndexCommand}" CommandParameter="1">
+                <Image Source="/Assets/rightarrow_enabled.png" />
             </Button>
         </StackPanel>
         <ListBox ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderThickness="0" Focusable="False" VerticalAlignment="Stretch" Grid.Row="1" Background="Transparent" ItemContainerStyle="{StaticResource Lststyle}" ItemTemplate="{StaticResource TwitchChat}" AlternationCount="2">
             <ListBox.ItemsSource>
-                <MultiBinding Converter="{StaticResource Paginator}">
+                <MultiBinding Converter="{StaticResource Paginator}" ConverterParameter="{StaticResource NumberOfElements}">
                     <Binding Path="Messages"/>
                     <Binding Path="Content" ElementName="PageIndex"/>
                 </MultiBinding>

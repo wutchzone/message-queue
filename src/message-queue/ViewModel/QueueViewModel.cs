@@ -24,6 +24,7 @@ namespace message_queue.ViewModel
         public string Channel { get { return _channel; } set { _channel = value; ChangeProperty("Channel"); } }
         public bool SubOnly { get { return _subOnly; } set { _subOnly = value; ChangeProperty("SubOnly"); } }
         public int PageIndex { get { return _pageIndex; } set { _pageIndex = value; ChangeProperty("PageIndex"); } }
+        public int NumberOfElements { get; set; }
 
         public Command PageIndexCommand { get; set; }
 
@@ -37,7 +38,7 @@ namespace message_queue.ViewModel
 
         public void OnMessage(object sender, OnMessageReceivedArgs e)
         {
-            if(e.ChatMessage.IsBroadcaster == false || e.ChatMessage.IsModerator == false)
+            if (e.ChatMessage.IsBroadcaster == false || e.ChatMessage.IsModerator == false)
             {
                 if (SubOnly == true && e.ChatMessage.IsSubscriber != true) return;
             }
@@ -56,23 +57,23 @@ namespace message_queue.ViewModel
 
             foreach (var item in Messages)
             {
-                if(item.Name == e.ChatMessage.Username)
+                if (item.Name == e.ChatMessage.Username)
                 {
                     item.Count++;
                     return;
                 }
             }
-            
+
             var _message = new Message(e.ChatMessage.Username, e.ChatMessage.Message, e.ChatMessage.IsSubscriber, e.ChatMessage.IsModerator);
             foreach (var item in Emotes.emoticons)
             {
-                if(item.regex == Emote)
+                if (item.regex == Emote)
                 {
                     _message.AddEmote(item.url);
                     break;
                 }
             }
-            
+
             _message.NameColor = e.ChatMessage.ColorHex;
             Messages.Add(_message);
             ChangeProperty("Messages");
@@ -85,6 +86,18 @@ namespace message_queue.ViewModel
 
         public bool ChangePagePredicate(object parameter)
         {
+            int _upOrDown = int.Parse(parameter.ToString());
+
+            if (_upOrDown == 1)
+            {
+                if ((PageIndex * NumberOfElements) > Messages.Count) return false;
+
+            }
+            else if (_upOrDown == -1)
+            {
+                if (PageIndex == 1) return false;
+            }
+
             return true;
         }
 

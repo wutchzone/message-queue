@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using message_queue.ViewModel;
+using System.Windows;
 
 namespace message_queue.View
 {
@@ -10,6 +11,7 @@ namespace message_queue.View
         public QueueWindow()
         {
             InitializeComponent();
+            (this.DataContext as QueueViewModel).NumberOfElements = int.Parse(FindResource("NumberOfElements").ToString());
         }
     }
 }

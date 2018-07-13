@@ -250,10 +250,10 @@
     <Folder Include="Base\Model\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\saveslot_scrollbar_rightarrow.png" />
+    <Resource Include="Assets\rightarrow_enabled.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\saveslot_scrollbar_leftarrow.png" />
+    <Resource Include="Assets\leftarrow_enabled.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\icon.ico" />
