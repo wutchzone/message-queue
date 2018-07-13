@@ -35,18 +35,17 @@ namespace message_queue.ViewModel
             {
                 if (SubOnly == true && e.ChatMessage.IsSubscriber != true) return;
             }
-
+            bool _shouldEnd = true;
             foreach (var item in e.ChatMessage.Message.Split(' '))
             {
                 if (item.Contains(Emote))
                 {
-
-                    break;
+                    _shouldEnd = false;
                 }
-                else
-                {
-                    return;
-                }
+            }
+            if (_shouldEnd)
+            {
+                return;
             }
 
             foreach (var item in Messages)

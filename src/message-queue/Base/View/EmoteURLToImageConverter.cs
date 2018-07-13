@@ -20,14 +20,17 @@ namespace message_queue.Base.View
 
             foreach (var item in _value)
             {
-                Image myImage3 = new Image();
-                BitmapImage bi3 = new BitmapImage();
-                bi3.BeginInit();
-                bi3.UriSource = new Uri(item, UriKind.Absolute);
-                bi3.EndInit();
-                myImage3.Stretch = Stretch.Fill;
-                myImage3.Source = bi3;
-                _newValue.Add(myImage3);
+                Image _image = new Image();
+                BitmapImage _bitmap = new BitmapImage();
+                _bitmap.BeginInit();
+                _bitmap.UriSource = new Uri(item, UriKind.Absolute);
+                _bitmap.EndInit();
+                _image.Width = 28;
+                _image.Height = 28;
+                _image.Stretch = Stretch.Fill;
+                _image.Source = _bitmap;
+
+                _newValue.Add(_image);
             }
             return _newValue;
         }
