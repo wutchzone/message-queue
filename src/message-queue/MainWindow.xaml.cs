@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using message_queue.ViewModel;
+using System.Windows;
 
 namespace message_queue
 {
@@ -10,6 +11,15 @@ namespace message_queue
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MainWindowName_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var _viewModel = (MainViewModel)DataContext;
+            if (_viewModel.ClosingCommand.CanExecute(null))
+            {
+                _viewModel.ClosingCommand.Execute(null);
+            }
         }
     }
 }

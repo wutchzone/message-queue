@@ -13,6 +13,7 @@ namespace message_queue.Model
 
         public static string CarryModeratorIconURL;
         public static string CarrySubscriberIconURL;
+        public static bool CarryHideCounter;
 
         public string Text { get; set; }
         public List<string> EmotesURL { get { return _emotesURL; } private set { _emotesURL = value; ChangeProperty("EmotesURL"); } }
@@ -23,6 +24,7 @@ namespace message_queue.Model
         public bool Moderator { get { return _moderator; } set { _moderator = value; ChangeProperty("Moderator"); } }
         public string ModeratorIconURL { get; set; }
         public string SubscriberIconURL { get; set; }
+        public bool HideCounter { get; set; }
 
         public Message(string name, string text, bool subscriber, bool moderator)
         {
@@ -32,6 +34,7 @@ namespace message_queue.Model
             Moderator = moderator;
             ModeratorIconURL = CarryModeratorIconURL;
             SubscriberIconURL = CarrySubscriberIconURL;
+            HideCounter = CarryHideCounter;
             Count = 1;
             NameColor = "#f00";
             EmotesURL = new List<string>();

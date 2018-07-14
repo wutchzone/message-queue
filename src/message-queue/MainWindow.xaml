@@ -5,9 +5,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:message_queue"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:message_queue.ViewModel"
         mc:Ignorable="d"
-        Title="Message Queue" Height="300" Width="300" ResizeMode="NoResize" FontFamily="Helvatica Neune">
+        Title="Message Queue" Height="300" Width="300" ResizeMode="NoResize" FontFamily="Helvatica Neune" Closing="MainWindowName_Closing">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
@@ -28,7 +29,7 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Streamer name</Label>
-                <TextBox VerticalContentAlignment="Center" Grid.Column="1" Text="{Binding Name}" />
+                <TextBox VerticalContentAlignment="Center" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -36,13 +37,18 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Emote name</Label>
-                <TextBox VerticalContentAlignment="Center" Grid.Column="1" Text="{Binding Emote}" />
+                <TextBox VerticalContentAlignment="Center" Grid.Column="1" Text="{Binding Emote, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
-            <StackPanel Orientation="Horizontal">
+            <Separator Margin="-5,5" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label>Subscriber only</Label>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding SubOnly}" />
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label>Hide counter</Label>
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding HideCounter}" />
+            </StackPanel>
         </StackPanel>
-        <Button Grid.Row="1" IsEnabled="{Binding EnableButton}" Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=MainWindowName}">Check</Button>
+        <Button Grid.Row="1" IsDefault="True" IsEnabled="{Binding EnableButton}" Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=MainWindowName}">Check</Button>
     </Grid>
 </Window>

@@ -28,7 +28,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Width="18" Height="18" Grid.Column="0" Source="{Binding ModeratorIconURL}" Visibility="{Binding Moderator, Converter={StaticResource Visibility}}" />
                 <Image Width="18" Height="18" Grid.Column="1" Source="{Binding SubscriberIconURL}" Visibility="{Binding Subscriber, Converter={StaticResource Visibility}}"/>
-                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Visibility="{Binding HideCounter, Converter={StaticResource Visibility}}" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Label Foreground="Gold" Content="{Binding Count, Converter={StaticResource Counter}}"/>
                 </StackPanel>
                 <Label Grid.Column="3" Foreground="{Binding NameColor}" Content="{Binding Name}"/>

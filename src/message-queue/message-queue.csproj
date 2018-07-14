@@ -187,6 +187,8 @@
     <Compile Include="Base\View\PaginationConverter.cs" />
     <Compile Include="Base\View\VisibilityConverter.cs" />
     <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\MySettings.cs" />
+    <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\Twitch.cs" />
     <Compile Include="Model\TwitchResponseBadges.cs" />
     <Compile Include="Model\TwitchResponseEmoticons.cs" />
