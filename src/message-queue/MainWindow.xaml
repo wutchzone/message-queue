@@ -48,6 +48,13 @@
                 <Label>Hide counter</Label>
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding HideCounter}" />
             </StackPanel>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Label>Max same Emote count</Label>
+                    <Label Content="{Binding EmoteCount}" />
+                </StackPanel>
+                <Slider Maximum="9" Minimum="1" Value="{Binding EmoteCount}" TickFrequency="1" IsSnapToTickEnabled="True"/>
+            </StackPanel>
         </StackPanel>
         <Button Grid.Row="1" IsDefault="True" IsEnabled="{Binding EnableButton}" Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=MainWindowName}">Check</Button>
     </Grid>

@@ -12,5 +12,6 @@ namespace message_queue.Model
         public string Name = "";
         public string Emote = "";
         public bool HideCounter = false;
+        public int SameEmoteCount = 3;
     }
 }

@@ -17,6 +17,7 @@ namespace message_queue.ViewModel
         private bool _subOnly;
         private int _pageIndex;
         private bool _hideCounter;
+        private int _sameEmoteCount;
         private MySettings _mySettings;
 
         public List<Message> Messages { get { return _messages; } set { _messages = value; ChangeProperty("Messages"); } }
@@ -37,8 +38,9 @@ namespace message_queue.ViewModel
             _channel = _mySettings.Name;
             _emote = _mySettings.Emote;
             _hideCounter = _mySettings.HideCounter;
-            Message.CarryHideCounter = _hideCounter;
-
+            _sameEmoteCount = _mySettings.SameEmoteCount;
+            Message.CarryHideCounter = !_hideCounter;
+            
             _twitch = new Twitch(EnviromentVariables.BotName, EnviromentVariables.BotToken, _channel);
             _twitch.OnMessage = OnMessage;
 
@@ -51,15 +53,16 @@ namespace message_queue.ViewModel
             {
                 if (_subOnly == true && e.ChatMessage.IsSubscriber != true) return;
             }
-            bool _shouldEnd = true;
+
+            int _sameEmoteCount = 0;
             foreach (var item in e.ChatMessage.Message.Split(' '))
             {
-                if (item.Contains(_emote))
+                if (item.Contains(_emote) && _sameEmoteCount != this._sameEmoteCount)
                 {
-                    _shouldEnd = false;
+                    _sameEmoteCount++;
                 }
             }
-            if (_shouldEnd)
+            if (_sameEmoteCount == 0)
             {
                 return;
             }
@@ -78,7 +81,10 @@ namespace message_queue.ViewModel
             {
                 if (item.regex == _emote)
                 {
-                    _message.AddEmote(item.url);
+                    for (int i = 0; i < _sameEmoteCount; i++)
+                    {
+                        _message.AddEmote(item.url);
+                    }
                     break;
                 }
             }

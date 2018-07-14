@@ -13,6 +13,7 @@ namespace message_queue.ViewModel
         private bool _subOnly;
         private bool _enableleButton;
         private bool _hideCounter;
+        private int _emoteCount;
         private MySettings _mySettings;
 
         public string Name { get { return _name; } set { _name = value; ChangeProperty("Name"); } }
@@ -20,6 +21,7 @@ namespace message_queue.ViewModel
         public bool SubOnly { get { return _subOnly; } set { _subOnly = value; ChangeProperty("SubOnly"); } }
         public bool EnableButton { get { return _enableleButton; } set { _enableleButton = value; ChangeProperty("EnableButton"); } }
         public bool HideCounter { get { return _hideCounter; } set { _hideCounter = value; ChangeProperty("HideCounter"); } }
+        public int EmoteCount { get { return _emoteCount; } set { _emoteCount = value; ChangeProperty("EmoteCount"); } }
 
         public Command CheckCommand { get; set; }
         public Command ClosingCommand { get; set; }
@@ -34,28 +36,26 @@ namespace message_queue.ViewModel
             HideCounter = _mySettings.HideCounter;
             Name = _mySettings.Name;
             Emote = _mySettings.Emote;
+            EmoteCount = _mySettings.SameEmoteCount;
 
             EnableButton = true;
         }
 
         public void Closing(object sender)
         {
-            _mySettings.SubOnly = SubOnly;
-            _mySettings.HideCounter = HideCounter;
-            _mySettings.Name = Name;
-            _mySettings.Emote = Emote;
-
-            _mySettings.Save();
+            SaveAll();
         }
 
         public async void Check(object window)
         {
-            EnableButton = false;
+            SaveAll();
 
             var _window = window as MainWindow;
 
             if (await Twitch.ChechIfStreamExistsAsync(Name, EnviromentVariables.ClientID))
             {
+                Closing(this);
+
                 TwitchResponseEmoticons _emotes = await Twitch.GetEmotesForStreamAsync(Name, EnviromentVariables.ClientID);
                 TwitchResponseBadges _badges = await Twitch.GetBadgesAsync(Name, EnviromentVariables.ClientID);
 
@@ -80,6 +80,17 @@ namespace message_queue.ViewModel
                 EnableButton = true;
             }
 
+        }
+
+        private void SaveAll()
+        {
+            _mySettings.SubOnly = SubOnly;
+            _mySettings.HideCounter = HideCounter;
+            _mySettings.Name = Name;
+            _mySettings.Emote = Emote;
+            _mySettings.SameEmoteCount = EmoteCount;
+
+            _mySettings.Save();
         }
 
         public new void ChangeProperty(string propertyName) { base.ChangeProperty(propertyName); }
