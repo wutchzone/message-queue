@@ -7,7 +7,11 @@ Take in mind that this app is free to use and I am making it in my free time. Pl
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YRC4A9CAHSPHW)
 
 # How it works
-Whenever you start this app. You must choose which stream chat the app should follow (simply by streamer˙s nickname). Then you type emote name (*Kappa* for example). Then if someone type the chosen emote it get˙s queueed to the stack without duplicite records.
+Whenever you start this app. You must choose which stream chat the app should follow (simply by streamer˙s nickname). Then you type emote name (*Kappa* for example). Then if someone type the chosen emote it get˙s queueed to the stack without duplicite records. You can specify more settings in startup window. 
+
+This app works as portable version. You do not have to install it. Just open downloaded file and run *.exe* file. 
+
+When you want to update for newer version of the app. Copy *settings.json* file in application directory to the newly downloaded app directory.
 
 # How to USE it
 1. Download app from **releases tab**.
